@@ -25,12 +25,6 @@ var specialCharacters = [
   '.'
 ];
 
-const charOption = [];
-const generatedPassword = [];
-  // join chars once enough
-
-// global levelso iuts accessible 
-
 // Array of numeric characters to be included in password
 var numericCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
@@ -98,7 +92,7 @@ var upperCasedCharacters = [
 // **** CRITERIA ****
 // Generate a password when the button is clicked
 
-// 1. Present a series of prompts for password criteria
+// !1. Present a series of prompts for password criteria
   // Length of password
     // At least 8 characters but no more than 128.
   // Character types
@@ -111,28 +105,89 @@ var upperCasedCharacters = [
 
 // 3. Once prompts are answered then the password should be generated and displayed in an alert or written to the page
 
+const charOption = [];
+const generatedPassword = [];
+  // join chars once enough
+
+// global levels iuts accessible 
 
 // Function to prompt user for password options
 function getPasswordOptions() {
-  // promtp user for password length
-  const passLength = prompt(`Choose the length for your password between the range of 8 - 128`)
-    if (passLength < 8) {
-      alert(`This number is too small. Please choose a number that is bigger than 8 and smaller than 128`)
-    } else if (passLength > 128) {
-      alert(`This number is too big. Please choose a number that is smaller than 128 and bigger than 8`)
-    }
+  // prompt user for password length
+  let passLength = parseInt(prompt(`Choose the length for your password (between the range of 8 to 128)`));
 
+  while (passLength < 8 || passLength > 128 || (isNaN(passLength))) {
+    if (passLength < 8) {
+        alert(`This number is too small. Please choose a number that is bigger than 8 and smaller than 128`)
+      } else if (passLength > 128) {
+        alert(`This number is too big. Please choose a number that is smaller than 128 and bigger than 8`)
+      } else {
+        alert(`Invalid response. Please type a number between 8 and 128`)
+      }
+    passLength = parseInt(prompt(`Choose the length for your password (between the range of 8 to 128)`));
+  }
+
+
+  // prompt user for upper case
+  let upperCase;
+
+  upperCase = confirm(`Include uppercase? (Hit Cancel for no)`)
+
+  // prompt user for lowercase
+  let lowerCase;
+
+  upperCase = confirm(`Include lower case? (Hit Cancel for no)`)
+
+  // prompt user for numeric
+  let numeric;
+
+  numeric = confirm(`Include a number? (Hit Cancel for no)`)
+
+  // prompt user for special characters
+
+  let specialChars;
+
+  specialChars = confirm(`Include a special character? (Hit Cancel for no)`)
+
+  // return options as an object
+  return {passLength, upperCase, lowerCase, numeric, specialChars};
 
 }
 
-getPasswordOptions();
+// getPasswordOptions();
 
-// prompt for pass length
-  // At least 8 characters but no more than 128.
-    // conditional to check is it is in range 
-    // prompt is string - nmeed to parse to integer
-    // if user unout out of range - return our of funtion or call the function again 
+
 // Function for getting a random element from an array
+function getRandom(arr) {
+
+  // join all the arrays that the user has selected yes for 
+  
+
+
+  // // FOR TESTING:
+  // let uppercase = true;
+  // let lower
+
+  // // **** generate random uppercase ****
+  // if (uppercase) {
+  //   // generate random index number for uppercase characters
+  //   let randomUpperIndex = Math.floor(Math.random() * upperCasedCharacters.length);
+  //   let upperChar = upperCasedCharacters[randomUpperIndex];
+  //   // FOR TESTING: to see if uppercase is fetched as expected
+  //   console.log(`Random Upper = ${upperChar}`)
+  // } else {
+  //   upperChar = null;
+  // }
+
+  // // **** generate random lowercase ****
+
+  // return {upperChar};
+}
+
+getRandom();
+
+
+
 
 
 // confirm which char sets to use
@@ -145,9 +200,11 @@ getPasswordOptions();
 // once character selected - move on to generating random characters
 
 
-function getRandom(arr) {
+// Function to generate password with user input
+function generatePassword() {
 
 }
+
 // var for password
 // var for index
 
@@ -157,12 +214,6 @@ function getRandom(arr) {
   // mega-array[generated-index] is the actual character
   // add that char to password 
   // return
-
-
-// Function to generate password with user input
-function generatePassword() {
-
-}
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
@@ -178,5 +229,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
-
-
