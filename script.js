@@ -129,91 +129,140 @@ function getPasswordOptions() {
 
 
   // prompt user for upper case
-  let upperCase;
+  // let upperCase;
 
-  upperCase = confirm(`Include uppercase? (Hit Cancel for no)`)
+  upperCaseChoice = confirm(`Include uppercase? (Hit Cancel for no)`)
 
   // prompt user for lowercase
-  let lowerCase;
+  // let lowerCase;
 
-  upperCase = confirm(`Include lower case? (Hit Cancel for no)`)
+  lowerCaseChoice = confirm(`Include lower case? (Hit Cancel for no)`)
 
   // prompt user for numeric
-  let numeric;
+  // let numeric;
 
-  numeric = confirm(`Include a number? (Hit Cancel for no)`)
+  numericChoice = confirm(`Include a number? (Hit Cancel for no)`)
 
   // prompt user for special characters
 
-  let specialChars;
+  // let specialChars;
 
-  specialChars = confirm(`Include a special character? (Hit Cancel for no)`)
+  specialCharsChoice = confirm(`Include a special character? (Hit Cancel for no)`)
 
+  var passOptions = {
+    passLength: passLength,
+    upperCasedCharacters: upperCaseChoice,
+    lowerCasedCharacters: lowerCaseChoice,
+    numericCharacters: numericChoice,
+    specialCharacters: specialCharsChoice,
+  }
+  
+  // test to see if options were recorded correctly:
+  console.log(passLength, passOptions)
   // return options as an object
-  return {passLength, upperCase, lowerCase, numeric, specialChars};
+  return passOptions;
 
 }
-
+// test for user prompts
 // getPasswordOptions();
 
 
-// Function for getting a random element from an array
+// *** Function for getting a random element from an array
 function getRandom(arr) {
+  // for testing:
+  var passOptions = {
+    upperCasedCharacters: true,
+    lowerCasedCharacters: true,
+    numericCharacters: true,
+    specialCharacters: true,
+  }
+
+  // number of options selected
+  let numberOfOptions = Object.keys(passOptions).length;
+  // console.log(numberOfOptions);
 
   // join all the arrays that the user has selected yes for 
   
+  let eligibleChars = [];
 
 
-  // // FOR TESTING:
-  // let uppercase = true;
-  // let lower
+  // console.log(Object.values(passOptions));
+  // console.log(passOptions.upperCasedCharacters);
 
-  // // **** generate random uppercase ****
-  // if (uppercase) {
-  //   // generate random index number for uppercase characters
-  //   let randomUpperIndex = Math.floor(Math.random() * upperCasedCharacters.length);
-  //   let upperChar = upperCasedCharacters[randomUpperIndex];
-  //   // FOR TESTING: to see if uppercase is fetched as expected
-  //   console.log(`Random Upper = ${upperChar}`)
-  // } else {
-  //   upperChar = null;
-  // }
+  // if statements for each option
+  // UPPERCASE
+  if (passOptions.upperCasedCharacters == true) {
+    // console.log("yes to upper");
+    eligibleChars = eligibleChars.concat(upperCasedCharacters);
+    // Test: to see eligibil array is returning as expected
+    // console.log(eligibleChars);
+  } else {
+    // console.log(`Uppercase was not selected`);
+  }
+  
+  // LOWERCASE
+  if (passOptions.lowerCasedCharacters == true) {
+    // console.log('yes to lower');
+    eligibleChars = eligibleChars.concat(lowerCasedCharacters);
+    // Test: to see eligibil array is returning as expected
+    // console.log(eligibleChars);
+  } else {
+    // console.log(`Lowercase was not selected`);
+  }
+  
+  // NUMREICS
+  if (passOptions.numericCharacters == true) {
+    // console.log('yes to numbers')
+    eligibleChars = eligibleChars.concat(numericCharacters);
+  } else {
+    // console.log(`Numerics was not selected`)
+  }
 
-  // // **** generate random lowercase ****
+  // SPECIAL CHARACTERS
+  if (passOptions.specialCharacters == true) {
+    // console.log('yes to special charaters')
+    eligibleChars = eligibleChars.concat(specialCharacters);
+  } else {
+    // console.log(`Special charaters was not selected`)
+  }
 
-  // return {upperChar};
+  // Generate random character from eligibleChar array 
+
+  // random index generator
+let randomIndex = Math.floor(Math.random() * (eligibleChars.length));
+console.log(randomIndex);
+
+// random character generator from the eligibleChar array
+let randomChar = eligibleChars[randomIndex];
+console.log(randomChar);
+return randomChar;
+  
 }
 
 getRandom();
 
 
-
-
-
-// confirm which char sets to use
-  // ask user if they want upper, special etc
-  // if user returns false for all - return or call function again 
-  // generate random char for each selected char set
-  // push selected char sets to a mega-array of all selected chars 
-  // OR keep array separate and generate a random number to select the array and another to select the index 
-
-// once character selected - move on to generating random characters
-
-
 // Function to generate password with user input
 function generatePassword() {
+  // for testing
+  let passLength = 9;
+  let password = [];
 
+  // for loop to generate password until it reaches selected length
+  for (let i = 0; i < passLength; i++) {
+    let randomChar = getRandom();
+    password.push(randomChar);
+  }
+  // TEST: to see generated password
+  console.log(password);
 }
 
-// var for password
-// var for index
+// iterate through pass to see if it has all characters types selected by user
 
-// for loop that loops selected length number of times
-  // generate a number 
-  // this is the index for the mega arry
-  // mega-array[generated-index] is the actual character
-  // add that char to password 
-  // return
+
+generatePassword();
+
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
