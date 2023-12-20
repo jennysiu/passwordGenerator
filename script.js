@@ -90,26 +90,13 @@ var upperCasedCharacters = [
 
 
 // **** CRITERIA ****
-// Generate a password when the button is clicked
 
-// !1. Present a series of prompts for password criteria
-  // Length of password
-    // At least 8 characters but no more than 128.
-  // Character types
-    // Lowercase
-    // Uppercase
-    // Numeric
-    // Special characters ($@%&*, etc)
 
 // 2. Code should validate for each input and at least one character type should be selected
 
-// 3. Once prompts are answered then the password should be generated and displayed in an alert or written to the page
-
-const charOption = [];
-const generatedPassword = [];
+let charOptions = {};
   // join chars once enough
 
-// global levels iuts accessible 
 
 // Function to prompt user for password options
 function getPasswordOptions() {
@@ -127,141 +114,152 @@ function getPasswordOptions() {
     passLength = parseInt(prompt(`Choose the length for your password (between the range of 8 to 128)`));
   }
 
-
   // prompt user for upper case
-  // let upperCase;
-
   upperCaseChoice = confirm(`Include uppercase? (Hit Cancel for no)`)
 
   // prompt user for lowercase
-  // let lowerCase;
-
   lowerCaseChoice = confirm(`Include lower case? (Hit Cancel for no)`)
 
   // prompt user for numeric
-  // let numeric;
-
   numericChoice = confirm(`Include a number? (Hit Cancel for no)`)
 
   // prompt user for special characters
-
-  // let specialChars;
-
   specialCharsChoice = confirm(`Include a special character? (Hit Cancel for no)`)
-
-  var passOptions = {
-    passLength: passLength,
-    upperCasedCharacters: upperCaseChoice,
-    lowerCasedCharacters: lowerCaseChoice,
-    numericCharacters: numericChoice,
-    specialCharacters: specialCharsChoice,
-  }
   
+  while (upperCaseChoice == false && lowerCaseChoice == false && numericChoice == false && specialCharsChoice == false) {
+    alert(`Please select at least one criteria`);
+    getPasswordOptions();
+  }
+
+  passOptions = {
+    passLength: passLength,
+    charOptions: {
+      upperCasedCharacters: upperCaseChoice,
+      lowerCasedCharacters: lowerCaseChoice,
+      numericCharacters: numericChoice,
+      specialCharacters: specialCharsChoice,
+    }
+  }
+
   // test to see if options were recorded correctly:
-  console.log(passLength, passOptions)
+  console.log(passOptions);
   // return options as an object
-  return passOptions;
+  return {passOptions};
 
 }
 // test for user prompts
-// getPasswordOptions();
+getPasswordOptions();
 
+// FOR TESTING:
+// let passLength = 9;
+// let upperCaseChoice = true;
+// let lowerCaseChoice = true;
+// let numericChoice = true;
+// let specialCharsChoice = true;
 
-// *** Function for getting a random element from an array
-function getRandom(arr) {
-  // for testing:
-  var passOptions = {
-    upperCasedCharacters: true,
-    lowerCasedCharacters: true,
-    numericCharacters: true,
-    specialCharacters: true,
-  }
+// passOptions = {
+//   passLength: passLength,
+//   charOptions: {
+//     upperCasedCharacters: upperCaseChoice,
+//     lowerCasedCharacters: lowerCaseChoice,
+//     numericCharacters: numericChoice,
+//     specialCharacters: specialCharsChoice,
+//   }
+// }
 
-  // number of options selected
-  let numberOfOptions = Object.keys(passOptions).length;
-  // console.log(numberOfOptions);
+// variable to store an array of characters to satisfy user criteria
+let criteriaChars = [];
+
+// *** Function for getting a random character from an array
+function getRandom() {
 
   // join all the arrays that the user has selected yes for 
-  
   let eligibleChars = [];
 
+  // if statements for each option (add to new eligible array if selected) 
+  // AND add a cahracter from that array to criteria Chars if user selected yes
 
-  // console.log(Object.values(passOptions));
-  // console.log(passOptions.upperCasedCharacters);
-
-  // if statements for each option
   // UPPERCASE
-  if (passOptions.upperCasedCharacters == true) {
-    // console.log("yes to upper");
+  if (passOptions.charOptions.upperCasedCharacters == true) {
     eligibleChars = eligibleChars.concat(upperCasedCharacters);
     // Test: to see eligibil array is returning as expected
     // console.log(eligibleChars);
-  } else {
-    // console.log(`Uppercase was not selected`);
+
+    // random character generator from the upper array
+    let randomIndex = Math.floor(Math.random() * (upperCasedCharacters.length) );
+    let randomUpper = upperCasedCharacters[randomIndex];
+    criteriaChars.push(randomUpper);
+    // Test: to see randomUpper
+    // console.log(randomUpper)
   }
   
   // LOWERCASE
-  if (passOptions.lowerCasedCharacters == true) {
+  if (passOptions.charOptions.lowerCasedCharacters == true) {
     // console.log('yes to lower');
     eligibleChars = eligibleChars.concat(lowerCasedCharacters);
-    // Test: to see eligibil array is returning as expected
-    // console.log(eligibleChars);
-  } else {
-    // console.log(`Lowercase was not selected`);
+    
+    // random character generator from the lower array
+    randomIndex = Math.floor(Math.random()* (lowerCasedCharacters.length));
+    let randomLower = lowerCasedCharacters[randomIndex];
+    criteriaChars.push(randomLower);
   }
   
   // NUMREICS
-  if (passOptions.numericCharacters == true) {
+  if (passOptions.charOptions.numericCharacters == true) {
     // console.log('yes to numbers')
     eligibleChars = eligibleChars.concat(numericCharacters);
-  } else {
-    // console.log(`Numerics was not selected`)
-  }
+
+    // random character generator from the numeric array
+    randomIndex = Math.floor(Math.random()* (numericCharacters.length));
+    let randomNumeric = numericCharacters[randomIndex];
+    criteriaChars.push(randomNumeric);
+  } 
 
   // SPECIAL CHARACTERS
-  if (passOptions.specialCharacters == true) {
+  if (passOptions.charOptions.specialCharacters == true) {
     // console.log('yes to special charaters')
     eligibleChars = eligibleChars.concat(specialCharacters);
-  } else {
-    // console.log(`Special charaters was not selected`)
-  }
 
-  // Generate random character from eligibleChar array 
+    // random character generator from the special chars array
+    randomIndex = Math.floor(Math.random()* (specialCharacters.length));
+    let randomSpecialChar = specialCharacters[randomIndex];
+    criteriaChars.push(randomSpecialChar);
+  } 
 
-  // random index generator
-let randomIndex = Math.floor(Math.random() * (eligibleChars.length));
-console.log(randomIndex);
-
-// random character generator from the eligibleChar array
-let randomChar = eligibleChars[randomIndex];
-console.log(randomChar);
-return randomChar;
+  // Generate random character from pool of eligibleChar array 
+  randomIndex = Math.floor(Math.random()* (eligibleChars.length));
   
+  // random character generator from the eligibleChar array
+  let randomChar = eligibleChars[randomIndex];
+  // console.log(randomChar);
+
+  return (randomChar)
 }
 
-getRandom();
+// getRandom();
 
+// test: check the criteria characters logs out fine
+  // console.log(criteriaChars)
 
 // Function to generate password with user input
 function generatePassword() {
-  // for testing
-  let passLength = 9;
-  let password = [];
+  let generatedPassword = [];
+  generatedPassword = generatedPassword.concat(criteriaChars);
 
-  // for loop to generate password until it reaches selected length
-  for (let i = 0; i < passLength; i++) {
+  // for loop to generate generatedPassword until it reaches selected length
+  for (let i = criteriaChars.length; i < passOptions.passLength; i++) {
     let randomChar = getRandom();
-    password.push(randomChar);
+    generatedPassword.push(randomChar);
   }
-  // TEST: to see generated password
-  console.log(password);
+  // TEST: to see generated generatedPassword
+  // console.log(generatedPassword);
+
+  // reset criteriaChars so it doesn't get carried forward
+  criteriaChars = [];
+  return generatedPassword;
 }
 
-// iterate through pass to see if it has all characters types selected by user
-
-
-generatePassword();
-
+// generatePassword();
 
 
 // Get references to the #generate element
@@ -270,10 +268,11 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var password = generatePassword().join("");
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
+  console.log(password);
 }
 
 // Add event listener to generate button
