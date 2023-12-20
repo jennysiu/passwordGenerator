@@ -142,10 +142,9 @@ function getPasswordOptions() {
   }
 
   // test to see if options were recorded correctly:
-  console.log(passOptions);
+  // console.log(passOptions);
   // return options as an object
   return {passOptions};
-
 }
 // test for user prompts
 getPasswordOptions();
